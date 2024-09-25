@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utmaning: Fixed positionering</title>
+    <style>
+ 
+      /*
+        position: static
+        position: relative
+        position: absolute
+        position: fixed
+        position: sticky
+ 
+        left, right, top, bottom
+      */
+ 
+      .products article {
+        background-color: white;
+      }
+ 
+      .products article:nth-child(3),
+      .products article:nth-child(6) {
+        border: 3px solid black;
+        position: sticky;
+        top: 100px;
+      }
+ 
+      .products > div {
+        display: grid;
+        gap: 10px;
+      }
+ 
+      @media (min-width: 640px) {
+        .products > div {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+ 
+      h2 {
+        text-align: center;
+      }
+ 
+     
+      img {
+        width: 100%;
+      }
+ 
+      #customer-service {
+        /* fäster elemnetet inom viewport */
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+ 
+      #customer-service:hover {
+        transform: scale(1.1);
+        transition-property: transform;
+        transition-duration: 1s;
+      }
+ 
+ 
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="products">
+        <h2>Våra produkter</h2>
+        <div>
+          <!-- dynamiskt genererade produktkort -->
+        </div>
+      </section>
+      <svg width="150" height="150" id="customer-service">
+        <circle cx="75" cy="75" r="50" fill="#aeaeae" />
+        <text x="50%" y="50%" text-anchor="middle" fill="white" font-size="15px" font-family="Arial" dy=".1em">Kundtjänst</text>
+        Sorry, your browser does not support inline SVG.
+      </svg>
+    </main>
+    <template id="product-card-template">
+      <article>
+        <img src="https://placehold.co/354x530.png" alt="Svart T-Shirt" />
+        <h3>Svart T-Shirt</h3>
+        <span class="brand">Levis</span>
+      </article>
+    </template>
+    <script>
+      // 1 - få tag på referens till templaten
+ 
+      const template = document.querySelector("#product-card-template");
+ 
+      // 2 - få tag på referens till div:en (grid:en)
+ 
+      const grid = document.querySelector(".products > div");
+ 
+      for (let i = 0; i < 8; i++) {
+        // 3 - skapa en klon / fragment av innehållet i templaten
+        const fragment = template.content.cloneNode(true);
+ 
+        // 4 - lägg till denna inuti div:en
+ 
+        grid.appendChild(fragment);
+      }
+    </script>
+  </body>
+</html>
